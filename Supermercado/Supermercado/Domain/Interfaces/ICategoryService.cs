@@ -5,7 +5,7 @@ namespace Supermercado.Domain.Interfaces
 { 
     public interface ICategoryService
     {
-        //Una de las tantas firmas de un método!
+        //Creación de los métodos de categoría
         Task<IEnumerable<Category>> GetCategoriesAsync();
         Task<Category> GetCategoryByIdAsync(Guid id);
         Task<Category> CreateCategoryAsync(Category category);
