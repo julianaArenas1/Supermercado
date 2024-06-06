@@ -20,6 +20,11 @@ namespace Supermercado.DAL
             modelBuilder.Entity<Sale>().HasIndex(s => s.Name).IsUnique(); //Aquí creo un índice del campo Name para la tabla Countries
         }
 
+        internal async Task SaveChangesAsync()
+        {
+            throw new NotImplementedException();
+        }
+
         #region DbSets
 
         public DbSet<Category> Categories { get; set; }

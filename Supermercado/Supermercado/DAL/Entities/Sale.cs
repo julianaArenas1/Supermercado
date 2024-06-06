@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Supermercado.DAL.Entities
 {
-    public class Sale
+    public class Sale : AuditBase
     {
         [Display(Name = "NIT Supermercado")]
         public int minimarketID { get; set; }

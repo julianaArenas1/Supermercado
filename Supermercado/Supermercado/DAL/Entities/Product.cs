@@ -1,9 +1,10 @@
-﻿using Supermercado.DAL.Entities;
+﻿using Supermercado.Entities;
+using Supermercado.DAL.Entities;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.Metrics;
-namespace Supermercado.Entities;
 
+namespace Supermercado.Entities;
     public class Product : AuditBase
     {
         [Display(Name = "Producto")]
