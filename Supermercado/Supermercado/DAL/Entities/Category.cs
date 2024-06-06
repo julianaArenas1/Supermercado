@@ -14,5 +14,7 @@ namespace Supermercado.DAL.Entities
 
         [Display(Name = "Foto")]
         public string Image { get; set; } = null!;
+
+        public ICollection<Product>? Products { get; set; }
     }
 }
