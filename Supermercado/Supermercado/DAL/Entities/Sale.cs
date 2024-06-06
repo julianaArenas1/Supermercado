@@ -6,7 +6,7 @@ namespace Supermercado.DAL.Entities
 {
     public class Sale
     {
-        [Display(Name = "NIT Minimercado")]
+        [Display(Name = "NIT Supermercado")]
         public int minimarketID { get; set; }
 
 
