@@ -1,11 +1,9 @@
-﻿using Supermercado.Entities;
-using Supermercado.DAL.Entities;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Diagnostics.Metrics;
 
-namespace Supermercado.Entities;
-    public class Product : AuditBase
+
+namespace Supermercado.DAL.Entities;
+public class Product : AuditBase
     {
         [Display(Name = "Producto")]
         [MaxLength(50, ErrorMessage = "El campo {0} debe tener máximo {1} caracteres")]

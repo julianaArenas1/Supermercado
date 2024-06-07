@@ -1,6 +1,9 @@
-﻿namespace Supermercado.Domain.Interfaces
+﻿using Supermercado.DAL.Entities;
+using System.Diagnostics.Metrics;
+
+namespace Supermercado.Domain.Interfaces
 {
-    public class IProductService
+    public interface IProductService
     {
         //Creación de los métodos para productos
         Task<IEnumerable<Product>> GetProductsAsync();
