@@ -1,3 +1,4 @@
+using Supermercado.DAL;
 using Supermercado.Domain.Interfaces;
 using Supermercado.Domain.Services;
 
@@ -12,6 +13,7 @@ builder.Services.AddDbContext<DataBaseContext>(options => options.UseSqlServer(b
 //Contenedor de dependencias
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ISaleService, SaleService>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
