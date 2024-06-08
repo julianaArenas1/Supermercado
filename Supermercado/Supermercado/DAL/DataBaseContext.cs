@@ -14,9 +14,22 @@ namespace Supermercado.DAL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Category>().HasIndex("Name", "CategoryId").IsUnique(); // Haciendo un índice compuesto
-            modelBuilder.Entity<Product>().HasIndex("Name", "ProductId").IsUnique();
-            modelBuilder.Entity<Sale>().HasIndex("Name", "SupermarketID").IsUnique();
+            modelBuilder.Entity<ProductSale>()
+                .HasKey(ps => new { ps.productId, ps.saleId });
+
+            modelBuilder.Entity<ProductSale>()
+                .HasOne(ps => ps.Product)
+                .WithMany(p => p.ProductSales)
+                .HasForeignKey(ps => ps.productId);
+
+            modelBuilder.Entity<ProductSale>()
+                .HasOne(ps => ps.Sale)
+                .WithMany(s => s.ProductSales)
+                .HasForeignKey(ps => ps.saleId);
+
+            modelBuilder.Entity<Sale>().HasIndex(s => s.Id).IsUnique();
+            modelBuilder.Entity<Product>().HasIndex(p => p.Id).IsUnique();
+            modelBuilder.Entity<Category>().HasIndex(c => c.Id).IsUnique();
         }
 
         #region DbSets

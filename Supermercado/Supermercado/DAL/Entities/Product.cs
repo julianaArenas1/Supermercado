@@ -11,7 +11,7 @@ public class Product : AuditBase
         public string productName { get; set; } = null!;
 
         [Required]
-        public int categoryId { get; set; }
+        public Guid categoryId { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
         [DisplayFormat(DataFormatString = "{0:C2}")]
@@ -41,5 +41,5 @@ public class Product : AuditBase
         [MaxLength(500, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
         public string Description { get; set; } = null!;
 
-        public IEnumerable<ProductSale>? ProductSales { get; set; }
+        public ICollection<ProductSale>? ProductSales { get; set; }
     }
