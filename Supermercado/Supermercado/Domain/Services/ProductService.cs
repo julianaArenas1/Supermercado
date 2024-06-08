@@ -38,7 +38,7 @@ namespace Supermercado.Domain.Services
 
         public async Task<Product> DeleteProductAsync(Guid id)
         {
-            var product = await GetProductByIdAsync(Guid id);
+            var product = await GetProductByIdAsync(id);
             if (product != null)
             {
                 _context.Products.Remove(product);
