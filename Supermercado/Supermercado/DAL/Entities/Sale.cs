@@ -1,5 +1,4 @@
-﻿using Supermercado.Entities;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
 namespace Supermercado.DAL.Entities
@@ -7,7 +6,7 @@ namespace Supermercado.DAL.Entities
     public class Sale : AuditBase
     {
         [Display(Name = "NIT Supermercado")]
-        public int minimarketID { get; set; }
+        public int supermarketID { get; set; }
 
 
         [Display(Name = "ID - usuario")]

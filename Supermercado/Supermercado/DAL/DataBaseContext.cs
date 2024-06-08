@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Supermercado.DAL.Entities;
-using Supermercado.Entities;
 
 namespace Supermercado.DAL
 {
@@ -16,13 +15,8 @@ namespace Supermercado.DAL
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Category>().HasIndex("Name", "CategoryId").IsUnique(); // Haciendo un índice compuesto
-            modelBuilder.Entity<Product>().HasIndex("Name", "ProductId").IsUnique(); // Haciendo un índice compuesto
-            modelBuilder.Entity<Sale>().HasIndex(s => s.Name).IsUnique(); //Aquí creo un índice del campo Name para la tabla Countries
-        }
-
-        internal async Task SaveChangesAsync()
-        {
-            throw new NotImplementedException();
+            modelBuilder.Entity<Product>().HasIndex("Name", "ProductId").IsUnique();
+            modelBuilder.Entity<Sale>().HasIndex("Name", "SupermarketID").IsUnique();
         }
 
         #region DbSets
@@ -30,7 +24,6 @@ namespace Supermercado.DAL
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Sale> Sales { get; set; }
-        public object Product { get; internal set; }
 
         #endregion
     }

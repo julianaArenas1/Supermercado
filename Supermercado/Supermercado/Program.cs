@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Supermercado.DAL;
 using Supermercado.Domain.Interfaces;
 using Supermercado.Domain.Services;
