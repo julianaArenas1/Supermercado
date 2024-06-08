@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Supermercado.DAL.Entities;
 using Supermercado.Domain.Interfaces;
+using Supermercado.Domain.Services;
+using System.Diagnostics.Metrics;
+
 
 namespace Supermercado.Controllers
 {
@@ -19,12 +22,12 @@ namespace Supermercado.Controllers
         [Route("GetAll")]
         public async Task<ActionResult<IEnumerable<Sale>>> GetSalesAsync()
         {
-            var sales = await _saleService.GetSalesAsync();
+            var sales = await _saleService.GetSaleAsync();
             if (sales == null || !sales.Any())
             {
                 return NotFound();
             }
-            return Ok(Sales);
+            return Ok(sales);
         }
 
         [HttpGet, ActionName("Get")]
@@ -39,52 +42,22 @@ namespace Supermercado.Controllers
             return Ok(sale);
         }
         [HttpPost, ActionName("Create")]
-        [Route("Create")]
+        [Route("New Sale")]
         public async Task<ActionResult<Sale>> CreateSaleAsync(Sale sale)
         {
             try
             {
-
-                var newSale = await _saleService.CreateCategoryAsync(sale);
-                if (newSale == null)
-                {
-                    return NotFound();
-                }
+                var newSale = await _saleService.CreateSaleAsync(sale);
+                if (newSale == null) return NotFound();
                 return Ok(newSale);
             }
             catch (Exception ex)
             {
-
                 if (ex.Message.Contains("duplicate"))
-                {
-                    return Conflict(string.Format("{0} ya existe", category.categoryName));
-                    return Conflict(ex.Message);
-                }
-            }
-        }
-        [HttpPut, ActionName("Edit")]
-        [Route("Edit")]
-        public async Task<ActionResult<Sale>> EditSaleAsync(Sale sale)
-        {
-            try
-            {
-                var editedSale = await _saleService.EditSaleAsync(sale);
-                if (editedSale == null)
-                {
-                    return NotFound();
-                }
-                return Ok(editedSale);
-            }
-            catch (Exception ex)
-            {
+                    return Conflict(String.Format("{0} ya existe", sale.Id));
 
-                if (ex.Message.Contains("duplicate"))
-                {
-                    return Conflict(string.Format("{0} ya existe", category.categoryName));
-                    return Conflict(ex.Message);
-                }
+                return Conflict(ex.Message);
             }
-
         }
         [HttpPut, ActionName("Delete")]
         [Route("Delete")]

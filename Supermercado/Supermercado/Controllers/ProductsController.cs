@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Supermercado.DAL.Entities;
 using Supermercado.Domain.Interfaces;
+using System.Diagnostics.Metrics;
 
 namespace Supermercado.Controllers
 {
@@ -43,59 +44,47 @@ namespace Supermercado.Controllers
 
         [HttpPost, ActionName("Create")]
             [Route("Create")]
-            public async Task<ActionResult<Product>> CreateProductAsync(Product product)
-             {
-                try
-                {
-
-                    var newProduct = await _categoryService.CreateProductAsync(product);
-                    if (newProduct == null)
-                    {
-                        return NotFound();
-                    }
-                    return Ok(newProduct);
-                }
-                catch (Exception ex)
-                {
-
-                    if (ex.Message.Contains("duplicate"))
-                    {
-                        return Conflict(string.Format("{0} ya existe", category.categoryName));
-                        return Conflict(ex.Message);
-                    }
-                }
-            }
-            [HttpPut, ActionName("Edit")]
-            [Route("Edit")]
-            public async Task<ActionResult<Product>> EditProductAsync(Product product)
+        public async Task<ActionResult<Product>> CreateProductAsync(Product product)
+        {
+            try
             {
-                try
-                {
-                    var editedProduct = await _productService.EditProductAsync(product);
-                    if (editedProduct == null)
-                    {
-                        return NotFound();
-                    }
-                    return Ok(editedProduct);
-                }
-                catch (Exception ex)
-                {
-
-                    if (ex.Message.Contains("duplicate"))
-                    {
-                        return Conflict(string.Format("{0} ya existe", category.categoryName));
-                        return Conflict(ex.Message);
-                    }
-                }
-
+                var newProduct = await _productService.CreateProductAsync(product);
+                if (newProduct == null) return NotFound();
+                return Ok(newProduct);
             }
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("duplicate"))
+                    return Conflict(String.Format("{0} ya existe", product.productName));
 
-            [HttpPut, ActionName("Delete")]
+                return Conflict(ex.Message);
+            }
+        }
+        [HttpPut, ActionName("Edit")]
+            [Route("Edit")]
+        public async Task<ActionResult<Product>> EditProductAsync(Product product)
+        {
+            try
+            {
+                var editedProduct = await _productService.EditProductAsync(product);
+                if (editedProduct == null) return NotFound();
+                return Ok(editedProduct);
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("duplicate"))
+                    return Conflict(String.Format("{0} ya existe", product.productName));
+
+                return Conflict(ex.Message);
+            }
+        }
+
+        [HttpPut, ActionName("Delete")]
             [Route("Delete")]
             public async Task<ActionResult<Product>> DeleteProductAsync(Guid id)
             {
 
-                var deletedProduct = await _categoryProduct.DeleteProductAsync(id);
+                var deletedProduct = await _productService.DeleteProductAsync(id);
                 if (deletedProduct == null)
                 {
                     return NotFound();

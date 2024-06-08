@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Supermercado.DAL.Entities;
 using Supermercado.Domain.Interfaces;
+using Supermercado.Domain.Services;
+using System.Diagnostics.Metrics;
 
 namespace Supermercado.Controllers
 {
@@ -43,46 +45,35 @@ namespace Supermercado.Controllers
         {
             try
             {
-
-               var newCategory = await _categoryService.CreateCategoryAsync(category);
-                if (newCategory == null) { 
-                return NotFound();
-                }
+                var newCategory = await _categoryService.CreateCategoryAsync(category);
+                if (newCategory == null) return NotFound();
                 return Ok(newCategory);
             }
             catch (Exception ex)
             {
-
                 if (ex.Message.Contains("duplicate"))
-                {
-                    return Conflict(string.Format("{0} ya existe", category.categoryName));
-                    return Conflict(ex.Message);
-                }
+                    return Conflict(String.Format("{0} ya existe", category.categoryName));
+
+                return Conflict(ex.Message);
             }
         }
         [HttpPut, ActionName("Edit")]
         [Route("Edit")]
-        public async Task<ActionResult<Category>> EditCategoryAsync(Category category)
+        public async Task<ActionResult<Category>> EditCountryAsync(Category category)
         {
             try
             {
                 var editedCategory = await _categoryService.EditCategoryAsync(category);
-                if(editedCategory == null)
-                {
-                    return NotFound();
-                }
+                if (editedCategory == null) return NotFound();
                 return Ok(editedCategory);
             }
             catch (Exception ex)
             {
-
                 if (ex.Message.Contains("duplicate"))
-                {
-                    return Conflict(string.Format("{0} ya existe", category.categoryName));
-                    return Conflict(ex.Message);
-                }
+                    return Conflict(String.Format("{0} ya existe", category.categoryName));
+
+                return Conflict(ex.Message);
             }
-        
         }
         [HttpPut, ActionName("Delete")]
         [Route("Delete")]
